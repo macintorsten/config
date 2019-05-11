@@ -1,1 +1,4 @@
 # config
+
+- .vimrc
+- .tmux.conf
