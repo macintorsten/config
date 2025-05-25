@@ -27,4 +27,4 @@ fi
 # Install all dotfiles using GNU Stow
 cd $(dirname "$0") || exit 1
 echo "Installing dotfiles using GNU Stow..."    
-stow *
+stow */
