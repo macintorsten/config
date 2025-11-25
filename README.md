@@ -7,6 +7,7 @@ Personal configuration files managed with GNU Stow.
 - **tmux** - Terminal multiplexer with TPM and plugins (dracula theme, tmux-logging)
 - **vim** - Text editor with custom configuration
 - **fzf** - Fuzzy finder with shell keybindings (CTRL-T, CTRL-R, ALT-C)
+- **starship** - Fast, customizable cross-shell prompt with powerline theme
 
 ## Requirements
 
@@ -46,6 +47,7 @@ make install-stow    # Install GNU Stow
 make install-tmux    # Install tmux
 make install-tpm     # Install Tmux Plugin Manager
 make install-fzf     # Install fzf
+make install-starship # Install Starship prompt
 make install-dotfiles # Symlink configs
 ```
 
@@ -62,6 +64,6 @@ make install-dotfiles # Symlink configs
 
 ```sh
 cd ~/config
-stow -D tmux vim
+stow -D tmux vim starship
 rm -rf ~/.tmux/plugins/tpm ~/.fzf
 ```
