@@ -51,6 +51,19 @@ make install-starship # Install Starship prompt
 make install-dotfiles # Symlink configs
 ```
 
+## Testing
+
+Test the installation in a Docker container:
+
+```sh
+make test              # Build and run automated tests
+make test-interactive  # Start interactive test container
+make test-build        # Build test container only
+make test-run          # Run verification tests only
+```
+
+The interactive test allows you to try out the full environment with tmux, vim, fzf, and starship prompt.
+
 ## Configuration
 
 - **tmux prefix**: `Ctrl-a`
