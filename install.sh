@@ -1,30 +1,27 @@
 #!/bin/bash
 
-# Install GNU Stow for different distributions
-if ! command -v stow &> /dev/null
-then
-    echo "GNU Stow is not installed. Installing..."
-    if [ -f /etc/debian_version ]; then
-        # Debian/Ubuntu-based distributions
-        sudo apt update && sudo apt install -y stow
-    elif [ -f /etc/redhat-release ]; then
-        # Red Hat/CentOS-based distributions
-        sudo yum install -y epel-release && sudo yum install -y stow
-    elif [ -f /etc/arch-release ]; then
-        # Arch-based distributions
-        sudo pacman -Sy --noconfirm stow
-    elif [ -f /etc/alpine-release ]; then
-        # Alpine Linux
-        sudo apk add stow
-    else
-        echo "Unsupported distribution. Please install GNU Stow manually."
-        exit 1
-    fi
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+echo "=== Dotfiles Installation ==="
+echo
+
+if command -v make &> /dev/null; then
+    cd "$SCRIPT_DIR"
+    make install
 else
-    echo "GNU Stow is already installed."
+    # Sequential fallback
+    for script in "$SCRIPT_DIR"/scripts/install-*.sh; do
+        bash "$script"
+        echo
+    done
 fi
 
-# Install all dotfiles using GNU Stow
-cd $(dirname "$0") || exit 1
-echo "Installing dotfiles using GNU Stow..."    
-stow */
+echo
+echo "=== Installation Complete ==="
+echo
+echo "Next steps:"
+echo "  1. Restart shell or run: source ~/.bashrc"
+echo "  2. Start tmux"
+echo "  3. In tmux, press Ctrl-a I to update plugins"

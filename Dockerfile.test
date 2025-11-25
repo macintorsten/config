@@ -1,0 +1,29 @@
+FROM ubuntu:latest
+
+# Install prerequisites (this layer will be cached)
+RUN apt-get update && \
+    apt-get install -y git sudo tmux vim curl make && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create test user
+RUN useradd -m -s /bin/bash testuser && \
+    echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Switch to test user
+USER testuser
+WORKDIR /home/testuser
+
+# Copy dotfiles repo (this layer will change frequently)
+COPY --chown=testuser:testuser . /home/testuser/config
+
+# Run installation
+RUN cd /home/testuser/config && bash install.sh
+
+# Verify installation
+RUN test -L /home/testuser/.tmux.conf || (echo "ERROR: .tmux.conf not linked" && exit 1)
+RUN test -L /home/testuser/.vimrc || (echo "ERROR: .vimrc not linked" && exit 1)
+RUN test -d /home/testuser/.tmux/plugins/tpm || (echo "ERROR: tpm not installed" && exit 1)
+RUN test -d /home/testuser/.fzf || (echo "ERROR: fzf not installed" && exit 1)
+
+CMD ["/bin/bash"]
