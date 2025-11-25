@@ -1,4 +1,4 @@
-.PHONY: all install help test test-build test-run test-interactive install-tools install-configs
+.PHONY: all install help test test-build test-run test-interactive install-tools install-configs remove-configs
 
 SCRIPTS_DIR := scripts
 TOOL_SCRIPTS := $(wildcard $(SCRIPTS_DIR)/install-*.sh)
@@ -25,6 +25,9 @@ install-configs:
 install-%:
 	@bash $(SCRIPTS_DIR)/install-$*.sh
 
+remove-configs:
+	@bash remove-configs.sh
+
 test: test-build test-run
 
 test-build:
@@ -45,6 +48,7 @@ help:
 	@echo "  make install           - Install all components (default)"
 	@echo "  make install-tools     - Install only tools (no configs)"
 	@echo "  make install-configs   - Install only configs (stow dotfiles)"
+	@echo "  make remove-configs    - Remove dotfile configs (interactive)"
 	@echo "  make test              - Build and run automated tests"
 	@echo "  make test-build        - Build test Docker container"
 	@echo "  make test-run          - Run automated verification tests"

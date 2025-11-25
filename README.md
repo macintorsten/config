@@ -105,25 +105,13 @@ Key bindings:
 
 ## Uninstalling
 
-Remove the sourcing line from `~/.bashrc`:
-```sh
-# Remove these lines added by dotfiles:
-# if [ -d "$HOME/.config/bashrc.d" ]; then
-#     for rc in "$HOME/.config/bashrc.d"/*.sh; do
-#         [ -f "$rc" ] && . "$rc"
-#     done
-#     unset rc
-# fi
-```
+Remove configuration symlinks and shell integration:
 
-Unlink dotfiles:
 ```sh
 cd ~/config
-stow -D bash tmux vim starship bat
+./remove-configs.sh
+# or
+make remove-configs
 ```
 
-Remove installed tools:
-```sh
-rm -rf ~/.tmux/plugins/tpm ~/.fzf
-# Uninstall other tools using your package manager
-```
+This removes dotfile symlinks and bashrc.d sourcing. Installed tools remain on your system.

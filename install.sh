@@ -11,11 +11,31 @@ if command -v make &> /dev/null; then
     cd "$SCRIPT_DIR"
     make install
 else
-    # Sequential fallback
-    for script in "$SCRIPT_DIR"/scripts/install-*.sh; do
-        bash "$script"
-        echo
+    echo "WARNING: make not found, using sequential fallback"
+    echo "Install order may not be optimal. Consider installing make."
+    echo ""
+    
+    # Sequential fallback with proper order
+    cd "$SCRIPT_DIR"
+    
+    # 1. Install stow first
+    bash scripts/install-stow.sh
+    
+    # 2. Install tools (parallel not possible without make)
+    for tool in fzf tmux tpm starship bat; do
+        if [ -f "scripts/install-${tool}.sh" ]; then
+            bash "scripts/install-${tool}.sh"
+        fi
     done
+    
+    # 3. Install configs
+    bash scripts/install-dotfiles.sh
+    
+    # 4. Install plugins that depend on configs
+    bash scripts/install-tmux-plugins.sh
+    
+    # 5. Add bash integration
+    bash scripts/install-bash-integration.sh
 fi
 
 echo
