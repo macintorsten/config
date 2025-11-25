@@ -1,14 +1,24 @@
-.PHONY: all install help test test-build test-run test-interactive
+.PHONY: all install help test test-build test-run test-interactive install-tools install-configs
 
 SCRIPTS_DIR := scripts
 TOOL_SCRIPTS := $(wildcard $(SCRIPTS_DIR)/install-*.sh)
-TOOL_TARGETS := $(patsubst $(SCRIPTS_DIR)/install-%.sh,%,$(filter-out $(SCRIPTS_DIR)/install-stow.sh $(SCRIPTS_DIR)/install-dotfiles.sh $(SCRIPTS_DIR)/install-tmux-plugins.sh,$(TOOL_SCRIPTS)))
+TOOL_TARGETS := $(patsubst $(SCRIPTS_DIR)/install-%.sh,%,$(filter-out $(SCRIPTS_DIR)/install-stow.sh $(SCRIPTS_DIR)/install-dotfiles.sh $(SCRIPTS_DIR)/install-tmux-plugins.sh $(SCRIPTS_DIR)/install-bash-integration.sh,$(TOOL_SCRIPTS)))
 IMAGE_NAME := config-test
 
 all: install
 
-install: install-stow
+# Full installation: tools + configs
+install: install-stow install-tools install-configs install-bash-integration
+	@echo ""
+	@echo "=== Installation Complete ==="
+	@echo "Run: source ~/.bashrc"
+
+# Install only tools (no config stowing)
+install-tools: install-stow
 	@$(MAKE) -j $(words $(TOOL_TARGETS)) $(addprefix install-,$(TOOL_TARGETS))
+
+# Install only configs (stow dotfiles, then install plugins that depend on configs)
+install-configs:
 	@$(MAKE) install-dotfiles
 	@$(MAKE) install-tmux-plugins
 
@@ -33,6 +43,8 @@ test-interactive: test-build
 help:
 	@echo "Available targets:"
 	@echo "  make install           - Install all components (default)"
+	@echo "  make install-tools     - Install only tools (no configs)"
+	@echo "  make install-configs   - Install only configs (stow dotfiles)"
 	@echo "  make test              - Build and run automated tests"
 	@echo "  make test-build        - Build test Docker container"
 	@echo "  make test-run          - Run automated verification tests"

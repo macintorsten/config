@@ -8,5 +8,5 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # Install dotfiles using GNU Stow
 cd "$REPO_ROOT" || exit 1
 echo "Installing dotfiles using GNU Stow..."
-stow -t "$HOME" tmux vim starship bat
+stow -t "$HOME" bash tmux vim starship bat
 echo "✓ Dotfiles symlinked"

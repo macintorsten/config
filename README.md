@@ -2,8 +2,11 @@
 
 Personal configuration files managed with GNU Stow.
 
+**Hybrid Bootstrap Approach:** This repository installs tools AND manages configurations. You can install tools separately from configs if desired.
+
 ## Tools Included
 
+- **bash** - Modular shell configuration (PATH, aliases, integrations)
 - **tmux** - Terminal multiplexer with TPM and plugins (dracula theme, tmux-logging)
 - **vim** - Text editor with custom configuration
 - **fzf** - Fuzzy finder with shell keybindings (CTRL-T, CTRL-R, ALT-C)
@@ -19,10 +22,24 @@ Personal configuration files managed with GNU Stow.
 
 ## Installation
 
+Full installation (tools + configs):
+
 ```sh
 git clone https://github.com/macintorsten/config.git ~/config
 cd ~/config
 ./install.sh
+```
+
+Install only tools (no config stowing):
+
+```sh
+make install-tools
+```
+
+Install only configs (requires tools already installed):
+
+```sh
+make install-configs
 ```
 
 After installation, restart your shell:
@@ -44,13 +61,16 @@ git pull
 Install specific components:
 
 ```sh
-make install-stow    # Install GNU Stow
-make install-tmux    # Install tmux
-make install-tpm     # Install Tmux Plugin Manager
-make install-fzf     # Install fzf
-make install-starship # Install Starship prompt
-make install-bat     # Install bat
-make install-dotfiles # Symlink configs
+make install-stow         # Install GNU Stow
+make install-tools        # Install all tools
+make install-configs      # Stow all configs
+make install-tmux         # Install tmux
+make install-tpm          # Install Tmux Plugin Manager
+make install-fzf          # Install fzf
+make install-starship     # Install Starship prompt
+make install-bat          # Install bat
+make install-dotfiles     # Symlink configs
+make install-bash-integration  # Add sourcing to ~/.bashrc
 ```
 
 ## Testing
@@ -68,6 +88,13 @@ The interactive test allows you to try out the full environment with tmux, vim, 
 
 ## Configuration
 
+All shell customizations are in `~/.config/bashrc.d/`:
+- `00-path.sh` - PATH configuration
+- `50-starship.sh` - Starship prompt initialization  
+- `60-fzf.sh` - fzf shell integration
+- `70-bat.sh` - bat with fzf preview
+
+Key bindings:
 - **tmux prefix**: `Ctrl-a`
 - **tmux pane navigation**: `Ctrl-a h/j/k/l`
 - **vim leader**: `,`
@@ -78,8 +105,25 @@ The interactive test allows you to try out the full environment with tmux, vim, 
 
 ## Uninstalling
 
+Remove the sourcing line from `~/.bashrc`:
+```sh
+# Remove these lines added by dotfiles:
+# if [ -d "$HOME/.config/bashrc.d" ]; then
+#     for rc in "$HOME/.config/bashrc.d"/*.sh; do
+#         [ -f "$rc" ] && . "$rc"
+#     done
+#     unset rc
+# fi
+```
+
+Unlink dotfiles:
 ```sh
 cd ~/config
-stow -D tmux vim starship bat
+stow -D bash tmux vim starship bat
+```
+
+Remove installed tools:
+```sh
 rm -rf ~/.tmux/plugins/tpm ~/.fzf
+# Uninstall other tools using your package manager
 ```

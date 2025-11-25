@@ -24,4 +24,7 @@ echo
 echo "Next steps:"
 echo "  1. Restart shell or run: source ~/.bashrc"
 echo "  2. Start tmux"
-echo "  3. In tmux, press Ctrl-a I to update plugins"
+echo "  3. In tmux, press Ctrl-a I to install plugins"
+echo ""
+echo "To install only tools: make install-tools"
+echo "To install only configs: make install-configs"
