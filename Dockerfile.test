@@ -27,5 +27,7 @@ RUN test -d /home/testuser/.tmux/plugins/tpm || (echo "ERROR: tpm not installed"
 RUN test -d /home/testuser/.fzf || (echo "ERROR: fzf not installed" && exit 1)
 RUN test -f /home/testuser/.config/starship.toml || (echo "ERROR: starship.toml not installed" && exit 1)
 RUN command -v starship || (echo "ERROR: starship not installed" && exit 1)
+RUN test -f /home/testuser/.config/bat/config || (echo "ERROR: bat config not installed" && exit 1)
+RUN command -v bat || command -v batcat || (echo "ERROR: bat not installed" && exit 1)
 
 CMD ["/bin/bash"]

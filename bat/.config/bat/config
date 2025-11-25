@@ -1,0 +1,14 @@
+# bat configuration
+# See 'bat --list-themes' for available themes
+
+# Theme (use a dark theme that matches starship)
+--theme="TwoDark"
+
+# Show line numbers, Git modifications and file header
+--style="numbers,changes,header"
+
+# Use italic text on the terminal
+--italic-text=always
+
+# Add mouse scrolling support in less
+--paging=auto
