@@ -46,28 +46,12 @@ cd dotfiles
 echo "  Packages: $(ls -d */ | tr -d '/')"
 stow */
 
-# Add bashrc.d sourcing if not already present
-if ! grep -q "/.config/bashrc.d/\*.sh" ~/.bashrc 2>/dev/null; then
+# Add single-line bashrc.d sourcing if not already present
+if ! grep -q ".bashrc.d" ~/.bashrc 2>/dev/null; then
     echo ""
-    echo "Adding bashrc.d sourcing to ~/.bashrc..."
-    cat >> ~/.bashrc << 'EOF'
-
-# Source dotfiles configuration
-if [ -d "$HOME/.config/bashrc.d" ]; then
-    for rc in "$HOME/.config/bashrc.d"/*.sh; do
-        [ -f "$rc" ] && . "$rc"
-    done
-    unset rc
-fi
-EOF
-    echo "✓ Added bashrc.d sourcing"
-fi
-
-# Install tmux plugins if TPM is available
-if [ -d "$HOME/.tmux/plugins/tpm" ]; then
-    echo ""
-    echo "Installing tmux plugins..."
-    "$HOME/.tmux/plugins/tpm/bin/install_plugins" 2>/dev/null || true
+    echo "Adding dotfiles sourcing to ~/.bashrc..."
+    echo '[ -f "$HOME/.bashrc.d" ] && . "$HOME/.bashrc.d"' >> ~/.bashrc
+    echo "✓ Added dotfiles sourcing"
 fi
 
 echo ""

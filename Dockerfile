@@ -14,19 +14,22 @@ RUN useradd -m -s /bin/bash testuser && \
 USER testuser
 WORKDIR /home/testuser
 
-# Copy dotfiles repo (this layer will change frequently)
-COPY --chown=testuser:testuser . /home/testuser/config
+# Copy only install scripts (cached unless scripts change)
+COPY --chown=testuser:testuser scripts/ /home/testuser/config/scripts/
 
-# Install tools by running all install scripts
+# Install tools by running all install scripts (cached unless scripts change)
 RUN cd /home/testuser/config/scripts && \
     for script in install-*.sh; do \
         echo "Running $script..."; \
         bash "$script" || exit 1; \
     done
 
+# Copy configuration files (invalidates cache when configs change)
+COPY --chown=testuser:testuser dotfiles/ /home/testuser/config/dotfiles/
+
 # Deploy all configurations using stow
 RUN cd /home/testuser/config/dotfiles && \
     stow -t ~ */ && \
-    echo 'if [ -d "$HOME/.config/bashrc.d" ]; then for rc in "$HOME/.config/bashrc.d"/*.sh; do [ -f "$rc" ] && . "$rc"; done; unset rc; fi' >> /home/testuser/.bashrc
+    echo '[ -f "$HOME/.bashrc.d" ] && . "$HOME/.bashrc.d"' >> /home/testuser/.bashrc
 
 CMD ["/bin/bash"]
