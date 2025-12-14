@@ -10,7 +10,7 @@ Personal configuration files managed with GNU Stow.
 - **tmux** - Terminal multiplexer with TPM and plugins (dracula theme, tmux-logging)
 - **vim** - Text editor with custom configuration
 - **fzf** - Fuzzy finder with shell keybindings (CTRL-T, CTRL-R, ALT-C)
-- **starship** - Fast, customizable cross-shell prompt with powerline theme
+- **oh-my-posh** - Fast, customizable cross-shell prompt with amro theme
 - **bat** - Cat clone with syntax highlighting and Git integration
 
 ## Requirements
@@ -67,7 +67,7 @@ make install-configs      # Stow all configs
 make install-tmux         # Install tmux
 make install-tpm          # Install Tmux Plugin Manager
 make install-fzf          # Install fzf
-make install-starship     # Install Starship prompt
+make install-oh-my-posh   # Install Oh My Posh prompt
 make install-bat          # Install bat
 make install-dotfiles     # Symlink configs
 make install-bash-integration  # Add sourcing to ~/.bashrc
@@ -84,13 +84,13 @@ make test-build        # Build test container only
 make test-run          # Run verification tests only
 ```
 
-The interactive test allows you to try out the full environment with tmux, vim, fzf, and starship prompt.
+The interactive test allows you to try out the full environment with tmux, vim, fzf, and oh-my-posh prompt.
 
 ## Configuration
 
 All shell customizations are in `~/.config/bashrc.d/`:
 - `00-path.sh` - PATH configuration
-- `50-starship.sh` - Starship prompt initialization  
+- `50-oh-my-posh.sh` - Oh My Posh prompt initialization  
 - `60-fzf.sh` - fzf shell integration
 - `70-bat.sh` - bat with fzf preview
 

@@ -25,11 +25,11 @@ RUN test -L /home/testuser/.tmux.conf || (echo "ERROR: .tmux.conf not linked" &&
 RUN test -L /home/testuser/.vimrc || (echo "ERROR: .vimrc not linked" && exit 1)
 RUN test -d /home/testuser/.tmux/plugins/tpm || (echo "ERROR: tpm not installed" && exit 1)
 RUN test -d /home/testuser/.fzf || (echo "ERROR: fzf not installed" && exit 1)
-RUN test -f /home/testuser/.config/starship.toml || (echo "ERROR: starship.toml not installed" && exit 1)
-RUN command -v starship || (echo "ERROR: starship not installed" && exit 1)
+RUN test -f /home/testuser/.config/oh-my-posh/amro.omp.json || (echo "ERROR: oh-my-posh config not installed" && exit 1)
+RUN command -v oh-my-posh || (echo "ERROR: oh-my-posh not installed" && exit 1)
 RUN test -f /home/testuser/.config/bat/config || (echo "ERROR: bat config not installed" && exit 1)
 RUN command -v bat || command -v batcat || (echo "ERROR: bat not installed" && exit 1)
 RUN test -d /home/testuser/.config/bashrc.d || (echo "ERROR: bashrc.d not installed" && exit 1)
-RUN test -f /home/testuser/.config/bashrc.d/50-starship.sh || (echo "ERROR: starship config not installed" && exit 1)
+RUN test -f /home/testuser/.config/bashrc.d/50-oh-my-posh.sh || (echo "ERROR: oh-my-posh config not installed" && exit 1)
 
 CMD ["/bin/bash"]

@@ -36,7 +36,7 @@ test-build:
 
 test-run: test-build
 	@echo "Running verification tests..."
-	@docker run --rm $(IMAGE_NAME) bash -c "echo 'All installation checks passed!' && starship --version"
+	@docker run --rm $(IMAGE_NAME) bash -c "echo 'All installation checks passed!' && oh-my-posh --version"
 
 test-interactive: test-build
 	@echo "Starting interactive test container..."
