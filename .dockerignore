@@ -1,5 +1,5 @@
 .git
 .gitignore
-Dockerfile.test
+Dockerfile
 .dockerignore
 README.md

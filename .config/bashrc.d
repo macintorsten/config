@@ -1,0 +1,1 @@
+../dotfiles/bash/.config/bashrc.d
