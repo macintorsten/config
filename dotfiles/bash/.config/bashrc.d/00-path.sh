@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PATH configuration for dotfiles
+# PATH configuration
 
 # Add ~/.local/bin to PATH for local binaries
 export PATH="$HOME/.local/bin:$PATH"
