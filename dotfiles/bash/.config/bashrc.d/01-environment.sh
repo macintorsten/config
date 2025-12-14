@@ -14,6 +14,3 @@ export HISTTIMEFORMAT="%F %T "  # Add timestamp to history
 # Better less defaults (for man pages, git diff, etc)
 export LESS="-R -F -X"          # R=colors, F=quit if one screen, X=no clear screen
 export PAGER=less
-
-# Colored man pages using bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
